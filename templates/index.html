@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>House Price Prediction</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url('https://miro.medium.com/v2/resize:fit:1400/0*DLSc317Usr5g5USD.jpeg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        text-align: center;
+        color: black;
+        position: fixed;
+        top: 3%; /* Adjust as needed */
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 999; /* Ensures the heading stays on top of other content */
+        padding: 10px 20px; /* Adjust padding as needed */
+        border-radius: 5px;
+    }
+    form {
+        max-width: 600px;
+        margin: 140px auto 10px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: white;
+        overflow-y: auto; /* Enable vertical scrolling for overflow content */
+        max-height: calc(100vh - 200px); 
+    }
+    label {
+        font-weight: bold;
+    }
+    input[type="text"] {
+        width: calc(100% - 10px);
+        padding: 10px;
+        margin: 5px 0;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border: black;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+    button {
+        color: white;
+        font-size: 15px;
+        width: calc(100% - 10px);
+        padding: 10px;
+        background-color: rgb(29, 95, 113);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+</style>
+</head>
+<body>
+
+<h1><strong>House Price Prediction</strong></h1>
+<form id="house_price_form" action="/predict" method="post">
+    <!-- Input fields for attributes -->
+    <label for="Area">Area:</label>
+    <input type="text" id="Area" name="Area" required>
+
+    <label for="Location">Location:</label>
+    <input type="text" id="Location" name="Location" required>
+
+    <label for="No. of Bedrooms">No. of Bedrooms:</label>
+    <input type="text" id="No. of Bedrooms" name="No. of Bedrooms" required>
+
+    <label for="Resale">Resale:</label>
+    <input type="text" id="Resale" name="Resale" list="resaleOptions" required>
+    <datalist id="resaleOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="MaintenanceStaff">Maintenance Staff:</label>
+    <input type="text" id="MaintenanceStaff" name="MaintenanceStaff" list="maintenanceStaffOptions" required>
+    <datalist id="maintenanceStaffOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="Gymnasium">Gymnasium:</label>
+    <input type="text" id="Gymnasium" name="Gymnasium" list="gymnasiumOptions" required>
+    <datalist id="gymnasiumOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="SwimmingPool">Swimming Pool:</label>
+    <input type="text" id="SwimmingPool" name="SwimmingPool" list="swimmingPoolOptions" required>
+    <datalist id="swimmingPoolOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="LandscapedGardens">Landscaped Gardens:</label>
+    <input type="text" id="LandscapedGardens" name="LandscapedGardens" list="landscapedGardensOptions" required>
+    <datalist id="landscapedGardensOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="JoggingTrack">Jogging Track:</label>
+    <input type="text" id="JoggingTrack" name="JoggingTrack" list="joggingTrackOptions" required>
+    <datalist id="joggingTrackOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="RainWaterHarvesting">Rainwater Harvesting:</label>
+    <input type="text" id="RainWaterHarvesting" name="RainWaterHarvesting" list="rainwaterHarvestingOptions" required>
+    <datalist id="rainwaterHarvestingOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="IndoorGames">Indoor Games:</label>
+    <input type="text" id="IndoorGames" name="IndoorGames" list="indoorGamesOptions" required>
+    <datalist id="indoorGamesOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="ShoppingMall">Shopping Mall:</label>
+    <input type="text" id="ShoppingMall" name="ShoppingMall" list="shoppingMallOptions" required>
+    <datalist id="shoppingMallOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="Intercom">Intercom:</label>
+    <input type="text" id="Intercom" name="Intercom" list="intercomOptions" required>
+    <datalist id="intercomOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="SportsFacility">Sports Facility:</label>
+    <input type="text" id="SportsFacility" name="SportsFacility" list="sportsFacilityOptions" required>
+    <datalist id="sportsFacilityOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="ATM">ATM:</label>
+    <input type="text" id="ATM" name="ATM" list="atmOptions" required>
+    <datalist id="atmOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="ClubHouse">Club House:</label>
+    <input type="text" id="ClubHouse" name="ClubHouse" list="clubHouseOptions" required>
+    <datalist id="clubHouseOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="School">School:</label>
+    <input type="text" id="School" name="School" list="schoolOptions" required>
+    <datalist id="schoolOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="24X7Security">24X7 Security:</label>
+    <input type="text" id="24X7Security" name="24X7Security" list="securityOptions" required>
+    <datalist id="securityOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="PowerBackup">Power Backup:</label>
+    <input type="text" id="PowerBackup" name="PowerBackup" list="powerBackupOptions" required>
+    <datalist id="powerBackupOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="CarParking">Car Parking:</label>
+    <input type="text" id="CarParking" name="CarParking" list="carParkingOptions" required>
+    <datalist id="carParkingOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="StaffQuarter">Staff Quarter:</label>
+    <input type="text" id="StaffQuarter" name="StaffQuarter" list="staffQuarterOptions" required>
+    <datalist id="staffQuarterOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="Cafeteria">Cafeteria:</label>
+    <input type="text" id="Cafeteria" name="Cafeteria" list="cafeteriaOptions" required>
+    <datalist id="cafeteriaOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="MultipurposeRoom">Multipurpose Room:</label>
+    <input type="text" id="MultipurposeRoom" name="MultipurposeRoom" list="multipurposeRoomOptions" required>
+    <datalist id="multipurposeRoomOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="Hospital">Hospital:</label>
+    <input type="text" id="Hospital" name="Hospital" list="hospitalOptions" required>
+    <datalist id="hospitalOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="WashingMachine">Washing Machine:</label>
+    <input type="text" id="WashingMachine" name="WashingMachine" list="washingMachineOptions" required>
+    <datalist id="washingMachineOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="Gasconnection">Gas Connection:</label>
+    <input type="text" id="Gasconnection" name="Gasconnection" list="gasConnectionOptions" required>
+    <datalist id="gasConnectionOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="AC">AC:</label>
+    <input type="text" id="AC" name="AC" list="acOptions" required>
+    <datalist id="acOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="Wifi">Wifi:</label>
+    <input type="text" id="Wifi" name="Wifi" list="wifiOptions" required>
+    <datalist id="wifiOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="Children'splayarea">Children's Play Area:</label>
+    <input type="text" id="Children'splayarea" name="Children'splayarea" list="children'sPlayAreaOptions" required>
+    <datalist id="children'sPlayAreaOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="LiftAvailable">Lift Available:</label>
+    <input type="text" id="LiftAvailable" name="LiftAvailable" list="liftOptions" required>
+    <datalist id="liftOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="BED">BED:</label>
+    <input type="text" id="BED" name="BED" list="bedOptions" required>
+    <datalist id="bedOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="VaastuCompliant">Vaastu Compliant:</label>
+    <input type="text" id="VaastuCompliant" name="VaastuCompliant" list="vaastuOptions" required>
+    <datalist id="vaastuOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="Microwave">Microwave:</label>
+    <input type="text" id="Microwave" name="Microwave" list="microwaveOptions" required>
+    <datalist id="microwaveOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="GolfCourse">Golf Course:</label>
+    <input type="text" id="GolfCourse" name="GolfCourse" list="golfCourseOptions" required>
+    <datalist id="golfCourseOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="TV">TV:</label>
+    <input type="text" id="TV" name="TV" list="tvOptions" required>
+    <datalist id="tvOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="DiningTable">Dining Table:</label>
+    <input type="text" id="DiningTable" name="DiningTable" list="diningTableOptions" required>
+    <datalist id="diningTableOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="Sofa">Sofa:</label>
+    <input type="text" id="Sofa" name="Sofa" list="sofaOptions" required>
+    <datalist id="sofaOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="Wardrobe">Wardrobe:</label>
+    <input type="text" id="Wardrobe" name="Wardrobe" list="wardrobeOptions" required>
+    <datalist id="wardrobeOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    
+    <label for="Refrigerator">Refrigerator:</label>
+    <input type="text" id="Refrigerator" name="Refrigerator" list="refrigeratorOptions" required>
+    <datalist id="refrigeratorOptions">
+        <option value="1">
+        <option value="0">
+    </datalist>
+    
+    <br>
+    <br>
+    <br>
+    
+
+    <button type="submit">Predict Price</button>
+</form> 
+
+</body>
+</html>

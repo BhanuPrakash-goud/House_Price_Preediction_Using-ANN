@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>House Price Prediction Result</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url('https://miro.medium.com/v2/resize:fit:1400/0*DLSc317Usr5g5USD.jpeg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    #prediction_result {
+        text-align: center;
+        font-size: 50px;
+        background-color: rgba(255, 255, 255, 0.856);
+        border-radius: 10px;
+    }
+</style>
+</head>
+<body>
+
+<!-- Display predicted price -->
+<div id="prediction_result">
+    <p><strong>Predicted Price:</strong> {{ predictedPrice }}</p>
+</div>
+
+</body>
+</html>
