@@ -60,3 +60,56 @@ cd house-price-prediction
 ```
 
 ### **2. Install Dependencies**
+Create a `requirements.txt` file with the following content:
+```plaintext
+Flask
+numpy
+pandas
+tensorflow
+scikit-learn
+```
+Then run:
+```bash
+pip install -r requirements.txt
+```
+
+### **3. Run the Flask Application**
+```bash
+python app.py
+```
+
+### **4. Access the Application**
+Open your browser and navigate to:
+```
+http://127.0.0.1:5000/
+```
+
+---
+
+## **Usage**
+1. Input property details (e.g., area, location, number of rooms, etc.) into the web application.
+2. Submit the form to get the predicted house price.
+
+---
+
+## **Future Scope**
+- **Enhanced Feature Set**: Incorporate additional features like market trends and proximity to amenities.
+- **Global Dataset Support**: Expand support for datasets from various countries.
+- **Visualization**: Add graphical insights for data and predictions.
+
+---
+
+## **Contributors**
+- **Bhanu Prakash**
+
+---
+
+## **License**
+This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+---
+
+## **Acknowledgments**
+- Inspired by real-world challenges in the real estate market.
+- Special thanks to the open-source community for providing resources and tools.
+
